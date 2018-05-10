@@ -9,9 +9,6 @@ new Vue({
   	add: 1
   },
   methods: {
-    addChange: function (event) {
-        this.add = event.target.value
-    },
   	increase: function(add) {
   	    this.counter += Number(add)
     },
