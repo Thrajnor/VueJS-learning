@@ -1,0 +1,47 @@
+#effect {
+  width: 98px;
+  height: 98px;
+  border: 1px solid black;
+}
+
+#effect {
+  transition: 0.5s;
+}
+
+#progress {
+  text-align: center;
+  border: 1px solid black;
+  position: relative;
+}
+#progressBar {
+  transition: 0.05s;
+  position: absolute;
+  background-color: grey;
+  height: 101%;
+  text-align: left;
+  z-index: 0;
+}
+#progressText {
+  position: relative;
+  margin: 1%;
+  z-index: 1;
+}
+
+.highlight {
+  background-color: red;
+  width: 200px !important;
+}
+
+.shrink {
+  background-color: gray;
+  width: 50px !important;
+}
+.red {
+    border: 1px solid red;
+}
+.green {
+    background-color: green;
+}
+.height {
+    height: 50px;
+}

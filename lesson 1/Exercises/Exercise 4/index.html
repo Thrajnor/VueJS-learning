@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FirstVueApp</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- 1) Start the Effect with the Button. The Effect should alternate the 
+      "highlight" or "shrink" class on each new setInterval tick 
+      (attach respective class to the div with id "effect" below) -->
+      <div>
+        <button @click="startEffect">{{toggle1}} Effect</button>
+        <div id="effect" :class='state'></div>
+      </div>
+      <!-- 2) Create a couple of CSS classes and attach them via the array syntax-->
+      <div :class='[red, height, green]'>I got a class :)</div>
+      <!-- 3) Let the user enter a class (create some example classes) and attach
+      it -->
+      <div>
+        <input type="text" v-model='classOf2Box'>
+        <div :class='classOf2Box'>im a box - change my class !!!</div>
+      </div>
+      <!-- 4) Let the user enter a class and enter true/ false for another class
+      (create some example classes) and attach the classes -->
+      <div>
+        <input type="text" v-model='classOf3Box'>
+        <input type="checkbox" @click='booleanOf3Box = !booleanOf3Box'> - change color of box
+        <div :class='[classOf3Box, {green: booleanOf3Box}, {red: !booleanOf3Box}]'>im a next box - change my class !!!</div>
+      </div>
+      <!-- 5) Repeat 3) but now with values for styles (instead of class names).
+      Attach the respective styles.  -->
+      <div>
+        <input type="text" v-model='styleOf4Box'>
+        <div :style='{backgroundColor: styleOf4Box}'>im a last Box - change my color !!!</div>
+      </div>
+      <!-- 6) Create a simple progress bar with setInterval and style bindings. 
+      Start it by hitting the below button. -->
+      <div>
+        <button v-on:click="startProgress">{{toggle2}} Progress</button>
+        <div>
+          <div id='progress'>
+            <div id='progressBar' :style='{width: progress + "%"}'></div>
+            <p id='progressText'>This is progress bar!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="script.js" type="text/javascript"></script>
+  </body>
+</html>
