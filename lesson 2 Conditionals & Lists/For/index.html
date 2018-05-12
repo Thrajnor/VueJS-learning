@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>for</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(stuff, i) in ingredients" :key="stuff">{{ stuff }} ({{ i }})</li>
+      </ul>
+      <!-- :key
+      It allows Vue to keep track of the different elements in a list. Since all of them
+      use the same element tag, it doesn't have another way of doing this. If you don't 
+      add key, it needs to basically recreate the whole list whenever an element changes.
+      With keys, it can do this in a more efficient manner.
+      -->
+      
+      <button @click="ingredients.push('spices')">Add stuff</button>
+      
+      <hr>
+      
+      <ul v-for='(person, index) in persons'>
+        <span>{{ index + 1 }}</span>
+        <li v-for='(value, key, index) in person' :key='person'>{{ key }}: {{ value }}</li>
+      </ul>
+     </div>
+    
+    <script src="script.js" type="text/javascript"></script>
+  </body>
+</html>
+

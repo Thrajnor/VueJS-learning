@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>if</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <template v-if="showGray">
+        <div class="gray">toggled with v-if on template</div>
+      </template>
+      <div class="fixed">this moves with template toggle</div>
+      <div v-show="showPink" class="pink">toggled with v-show</div>
+      <div class="fixed">this moves when display:none is added above</div>
+    
+      <button @click="showGray = !showGray">toggle template</button>
+      <button @click="showPink = !showPink">toggle show</button>
+    </div>
+    
+    <script src="script.js" type="text/javascript"></script>
+  </body>
+</html>
+
