@@ -7,7 +7,7 @@
 .healthbar {
   width: 80%;
   height: 40px;
-  background-color: #eee;
+  background-color: #ddd;
   margin: auto;
   transition: width 500ms;
 }
@@ -51,21 +51,21 @@ section.log {
 .log ul {
   list-style: none;
   font-weight: bold;
-  text-transform: uppercase;
 }
 
 .log ul li {
   margin: 5px;
 }
 
-.log ul .player-turn {
+.log ul .player {
   color: blue;
   background-color: #e4e8ff;
 }
 
-.log ul .monster-turn {
+.log ul .monster {
   color: red;
   background-color: #ffc0c1;
+  margin-bottom: 4%;
 }
 
 /*BUTTON SECTION =========================================*/
@@ -130,3 +130,10 @@ button {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
+/*TOP TO BOTTOM SECTION =========================================*/
+
+/*.top-to-bottom {*/
+/*  display: flex;*/
+/*  flex-direction: column-reverse;*/
+/*}*/

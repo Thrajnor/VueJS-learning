@@ -38,18 +38,20 @@
       <section class="row controls menu">
         <div class="small-12 columns">
           <button id="attack" @click='attack(player.stun)'>{{ player.skills.skill1 }}</button>
-          <button id="special-attack" @click='strongAtack(player.stun)'>{{ player.skills.skill2 }}</button>
+          <button id="special-attack" @click='strongAttack(player.stun)'>{{ player.skills.skill2 }}</button>
           <button id="heal" @click='heal(player.stun)'>{{ player.skills.skill3 }}</button>
           <button id="give-up" @click='isRunning = !isRunning'>GIVE UP</button>
         </div>
       </section>
       <section class="row log">
         <div class="small-12 columns">
-          <ul>
-            <h4>Battle Log</h4>
-            <li>
-              Natalka
-            </li>
+          <h4>Battle Log</h4>
+          <ul class='top-to-bottom'>
+            <template v-for='(log, i) in logs'>
+              <li :class='log.turn'>
+                {{ log.text }}
+              </li>
+            </template>
           </ul>
         </div>
       </section>
