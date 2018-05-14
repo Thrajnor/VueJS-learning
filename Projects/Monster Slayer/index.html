@@ -12,16 +12,16 @@
     <div class="small-6 columns">
       <h1 class="text-center">{{ player.name }}</h1>
       <div class="healthbar">
-        <div class="health healthbar text-center" style="background-color: green; margin: 0; color: white;" :style='{width: ((player.currentHealth * 100) / player.maxHealth) + "%"}'>
-          <h4>{{ player.currentHealth }} / {{ player.maxHealth }}</h4>
+        <div class="health healthbar text-center" style="background-color: green; margin: 0; color: white;" :style='{width: (player.health <= 0) ? 0 : ((player.health * 100) / player.maxHealth) + "%"}'>
+          <h4>{{ player.health }} / {{ player.maxHealth }}</h4>
         </div>
       </div>
     </div>
     <div class="small-6 columns">
       <h1 class="text-center">{{ monster.name }}</h1>
       <div class="healthbar">
-        <div class="health healthbar text-center" style="background-color: green; margin: 0; color: white;" :style='{width: ((monster.currentHealth * 100) / monster.maxHealth) + "%"}'>
-          <h4>{{ monster.currentHealth }} / {{ monster.maxHealth }}</h4>
+        <div class="health healthbar text-center" style="background-color: green; margin: 0; color: white;" :style='{width: (monster.health <= 0) ? 0 : ((monster.health * 100) / monster.maxHealth) + "%"}'>
+          <h4>{{ monster.health }} / {{ monster.maxHealth }}</h4>
         </div>
       </div>
     </div>
@@ -37,9 +37,9 @@
     <section v-if='isRunning'>
       <section class="row controls menu">
         <div class="small-12 columns">
-          <button id="attack" @click=''>Attack</button>
-          <button id="special-attack" @click=''>Strong Attack</button>
-          <button id="heal" @click=''>Heal</button>
+          <button id="attack" @click='attack(player.stun)'>{{ player.skills.skill1 }}</button>
+          <button id="special-attack" @click='strongAtack(player.stun)'>{{ player.skills.skill2 }}</button>
+          <button id="heal" @click='heal(player.stun)'>{{ player.skills.skill3 }}</button>
           <button id="give-up" @click='isRunning = !isRunning'>GIVE UP</button>
         </div>
       </section>
