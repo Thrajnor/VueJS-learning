@@ -47,7 +47,7 @@
         <div class="small-12 columns">
           <h4>Battle Log</h4>
           <ul class='top-to-bottom'>
-            <template v-for='(log, i) in logs'>
+            <template v-for='(log, i) in logs.slice().reverse()'>
               <li :class='log.turn'>
                 {{ log.text }}
               </li>

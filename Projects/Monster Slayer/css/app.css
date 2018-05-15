@@ -61,12 +61,12 @@ section.log {
 .log ul .player {
   color: blue;
   background-color: #e4e8ff;
+  margin-bottom: 2%;
 }
 
 .log ul .monster {
   color: red;
   background-color: #ffc0c1;
-  margin-bottom: 4%;
 }
 
 /*BUTTON SECTION =========================================*/

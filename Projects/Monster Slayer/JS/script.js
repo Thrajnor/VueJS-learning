@@ -1,6 +1,6 @@
 var Vue
 
-new Vue({
+var app = new Vue({
  el: '#app',
   data: {
     alwaysTrue: true,
@@ -33,8 +33,12 @@ new Vue({
     },
     logs: []
   },
-  computed: {
-    
+  watch: {
+    monster: function () {
+      if (this.monster.health <= 0) {
+        return this.monster.health = this.monster.maxHealth
+      }
+    }
   },
   methods: {
     // PLAYER ATTACKS ==========================================
