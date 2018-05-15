@@ -33,6 +33,9 @@ new Vue({
     },
     logs: []
   },
+  computed: {
+    
+  },
   methods: {
     // PLAYER ATTACKS ==========================================
     attack: function(stun) {
@@ -192,6 +195,12 @@ new Vue({
           this.potion(this.monster.stun)
         }
       }
+    },
+    giveUp: function () {
+      this.isRunning = !this.isRunning
+      this.player.health = this.player.maxHealth
+      this.monster.health = this.monster.maxHealth
+      this.logs = []
     }
   }
 });

@@ -14,12 +14,12 @@ new Vue({
   },
 //   THIS WILL WAIT UNTIL CHANGE IS MADE TO A VALUE
   watch: {
-      counter: function (value) {
-          var thiss = this
-          setTimeout(function () {
-              thiss.counter = 0
-          }, 2000)
-      }
+    counter: function (value) {
+        var thiss = this
+        setTimeout(function () {
+            thiss.counter = 0
+        }, 2000)
+    }
   },
 //   METHOD WILL RUN WITH EVERY CHANGE EVEN NOT RELATED
   methods: {

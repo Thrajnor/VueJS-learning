@@ -40,7 +40,7 @@
           <button id="attack" @click='attack(player.stun)'>{{ player.skills.skill1 }}</button>
           <button id="special-attack" @click='strongAttack(player.stun)'>{{ player.skills.skill2 }}</button>
           <button id="heal" @click='heal(player.stun)'>{{ player.skills.skill3 }}</button>
-          <button id="give-up" @click='isRunning = !isRunning'>GIVE UP</button>
+          <button id="give-up" @click='giveUp()'>GIVE UP</button>
         </div>
       </section>
       <section class="row log">
