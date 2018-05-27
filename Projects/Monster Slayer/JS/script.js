@@ -7,6 +7,7 @@ var app = new Vue({
     isRunning: false,
     // PLAYER MODEL ==========================================
     player: {
+      type: 'player',
       name: 'Thrajnor',
       health: 125,
       maxHealth: 125,
@@ -20,6 +21,7 @@ var app = new Vue({
     },
     // MONSTER MODEL ==========================================
     monster: {
+      type: 'monster',
       name: 'Goblin',
       health: 100,
       maxHealth: 100,
@@ -41,62 +43,65 @@ var app = new Vue({
     }
   },
   methods: {
+    calculateMinMax: function(min, max) {
+      return Math.max(Math.round(Math.random() * max) + 1, min)
+    },
+    log: function (did, char, enemy, howMuch) {
+      if(did === 'stun') {
+        return this.logs.push({
+          turn: char.type,
+          text: char.name + ' is stunned !!!',
+        })
+      } else if (did === 'heal') {
+        return this.logs.push({
+          turn: char.type,
+          text: char.name + ' heals himself with ' + char.skills.skill3 + ' for ' + howMuch + ' hit points',
+        })
+      } else if (did === 'attack') {
+        return this.logs.push({
+          turn: char.type,
+          text: char.name + ' hits with ' + char.skills.skill1 + ' ' + enemy.name + ' for ' + howMuch + ' damage',
+        })
+      }
+    },
     // PLAYER ATTACKS ==========================================
     attack: function(stun) {
       if (!stun) {
-        var damage = this.player.weapon + Math.round(6 * (Math.random() / .99))
+        // calculate damage ========
+        var damage = this.calculateMinMax(5, 11)
         this.monster.health -= damage
-        // log push ================
-        this.logs.push({
-          turn: 'player',
-          text: this.player.name + ' hits with ' + this.player.skills.skill1 + ' ' + this.monster.name + ' for ' + damage + ' damage',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('attack', this.player, this.monster, damage)
         return this.nextTurn('monster')
       } else {
         this.player.stun = false
-        // log push ================
-        this.logs.push({
-          turn: 'player',
-          text: this.player.name + ' is stunned !!!',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('stun', this.player)
         return this.nextTurn('monster')
       }
     },
     strongAttack: function(stun) {
       if (!stun) {
-        var damage = (this.player.weapon * 1.5) + Math.round(10 * (Math.random() / .99))
+        // calculate damage ========
+        var damage = this.calculateMinMax(10, 15)
         this.monster.health -= damage
         this.player.stun = true
-        // log push ================
-        this.logs.push({
-          turn: 'player',
-          text: this.player.name + ' hits with ' + this.player.skills.skill2 + ' ' + this.monster.name + ' for ' + damage + ' damage',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('attack', this.player, this.monster, damage)
         return this.nextTurn('monster')
       } else {
         this.player.stun = false
-        // log push ================
-        this.logs.push({
-          turn: 'player',
-          text: this.player.name + ' is stunned !!!',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('stun', this.player)
         return this.nextTurn('monster')
       }
     },
     heal: function(stun) {
       if (!stun) {
-        var heal = 15 + Math.round(10 * (Math.random() / .99))
+        var heal = this.calculateMinMax(15, 20)
         this.player.health += heal
-        // log push ================
-        this.logs.push({
-          turn: 'player',
-          text: this.player.name + ' heals himself with ' + this.player.skills.skill3 + ' for ' + heal + ' hit points',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('heal', this.player, this.monster, heal)
         if (this.player.health > this.player.maxHealth) {
           this.player.health = this.player.maxHealth
           return this.nextTurn('monster')
@@ -105,12 +110,8 @@ var app = new Vue({
         }
       } else {
         this.player.stun = false
-        // log push ================
-        this.logs.push({
-          turn: 'player',
-          text: this.player.name + ' is stunned !!!',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('stun', this.player)
         return this.nextTurn('monster')
       }
     },
@@ -118,59 +119,41 @@ var app = new Vue({
 
     stab: function(stun) {
       if (!stun) {
-        var damage = this.monster.weapon + Math.round(6 * (Math.random() / .99))
+        // calculate damage ========
+        var damage = this.calculateMinMax(5, 15)
         this.player.health -= damage
-        // log push ================
-        this.logs.push({
-          turn: 'monster',
-          text: this.monster.name + ' hits with ' + this.monster.skills.skill1 + ' ' + this.player.name + ' for ' + damage + ' damage',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('attack', this.monster, this.player, damage)
         return this.nextTurn('player')
       } else {
         this.monster.stun = false
-        // log push ================
-        this.logs.push({
-          turn: 'monster',
-          text: this.monster.name + ' is stunned !!!',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('stun', this.monster)
         return this.nextTurn('player')
       }
     },
     dirtyBlow: function(stun) {
       if (!stun) {
-        var damage = (this.monster.weapon * 1.5) + Math.round(10 * (Math.random() / .99))
+        // calculate damage ========
+        var damage = this.calculateMinMax(10, 20)
         this.player.health -= damage
         this.monster.stun = true
-        // log push ================
-        this.logs.push({
-          turn: 'monster',
-          text: this.monster.name + ' hits with ' + this.monster.skills.skill2 + ' ' + this.player.name + ' for ' + damage + ' damage',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('attack', this.monster, this.player, damage)
         return this.nextTurn('player')
       } else {
         this.monster.stun = false
-        // log push ================
-        this.logs.push({
-          turn: 'monster',
-          text: this.monster.name + ' is stunned !!!',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('stun', this.monster)
         return this.nextTurn('player')
       }
     },
     potion: function(stun) {
       if (!stun) {
-        var heal = 15 + Math.round(10 * (Math.random() / .99))
+        var heal = this.calculateMinMax(15, 25)
         this.monster.health += heal
-        // log push ================
-        this.logs.push({
-          turn: 'monster',
-          text: this.monster.name + ' heals himself with ' + this.monster.skills.skill3 + ' for ' + heal + ' hit points',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('heal', this.monster, this.player, heal)
         if (this.monster.health > this.monster.maxHealth) {
           this.monster.health = this.monster.maxHealth
           return this.nextTurn('player')
@@ -179,12 +162,8 @@ var app = new Vue({
         }
       } else {
         this.monster.stun = false
-        // log push ================
-        this.logs.push({
-          turn: 'monster',
-          text: this.monster.name + ' is stunned !!!',
-        })
-        // End log push ================
+        // log push ================ 
+        this.log('stun', this.monster)
         return this.nextTurn('player')
       }
     },
@@ -204,6 +183,8 @@ var app = new Vue({
       this.isRunning = !this.isRunning
       this.player.health = this.player.maxHealth
       this.monster.health = this.monster.maxHealth
+      this.player.stun = false
+      this.monster.stun = false
       this.logs = []
     }
   }
