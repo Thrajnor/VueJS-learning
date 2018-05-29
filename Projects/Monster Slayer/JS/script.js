@@ -5,6 +5,8 @@ var app = new Vue({
   data: {
     alwaysTrue: true,
     isRunning: false,
+    loseCounter: 0,
+    winCounter: 0,
     // PLAYER MODEL ==========================================
     player: {
       type: 'player',
@@ -34,13 +36,6 @@ var app = new Vue({
       }
     },
     logs: []
-  },
-  watch: {
-    monster: function () {
-      if (this.monster.health <= 0) {
-        return this.monster.health = this.monster.maxHealth
-      }
-    }
   },
   methods: {
     calculateMinMax: function(min, max) {
@@ -100,14 +95,14 @@ var app = new Vue({
       if (!stun) {
         var heal = this.calculateMinMax(15, 20)
         this.player.health += heal
-        // log push ================ 
-        this.log('heal', this.player, this.monster, heal)
         if (this.player.health > this.player.maxHealth) {
           this.player.health = this.player.maxHealth
           return this.nextTurn('monster')
         } else {
-          return this.nextTurn('monster')
+          this.nextTurn('monster')
         }
+        // log push ================ 
+        this.log('heal', this.player, this.monster, heal)
       } else {
         this.player.stun = false
         // log push ================ 
@@ -120,7 +115,7 @@ var app = new Vue({
     stab: function(stun) {
       if (!stun) {
         // calculate damage ========
-        var damage = this.calculateMinMax(5, 15)
+        var damage = this.calculateMinMax(7, 17)
         this.player.health -= damage
         // log push ================ 
         this.log('attack', this.monster, this.player, damage)
@@ -152,14 +147,14 @@ var app = new Vue({
       if (!stun) {
         var heal = this.calculateMinMax(15, 25)
         this.monster.health += heal
-        // log push ================ 
-        this.log('heal', this.monster, this.player, heal)
         if (this.monster.health > this.monster.maxHealth) {
           this.monster.health = this.monster.maxHealth
           return this.nextTurn('player')
         } else {
-          return this.nextTurn('player')
+          this.nextTurn('player')
         }
+        // log push ================ 
+        this.log('heal', this.monster, this.player, heal)
       } else {
         this.monster.stun = false
         // log push ================ 
@@ -168,6 +163,9 @@ var app = new Vue({
       }
     },
     nextTurn: function (turn) {
+      if (this.checkWin()) {
+        return
+      }
       if (turn === 'monster') {
         var whichAttack = Math.round(2 * (Math.random() / .99))
         if (whichAttack === 0) {
@@ -177,15 +175,40 @@ var app = new Vue({
         } else {
           this.potion(this.monster.stun)
         }
+        this.checkWin()
       }
     },
     giveUp: function () {
-      this.isRunning = !this.isRunning
+      this.isRunning = false
+      this.loseCounter += 1
+    },
+    startGame: function () {
+      this.isRunning = true
       this.player.health = this.player.maxHealth
       this.monster.health = this.monster.maxHealth
       this.player.stun = false
       this.monster.stun = false
       this.logs = []
+    },
+    checkWin: function () {
+      if (this.monster.health <= 0) {
+        this.winCounter += 1
+        if (confirm('Good Game you win! start anew?')) {
+          this.startGame()
+        } else {
+          this.isRunning = false
+        }
+        return true
+      } else if (this.player.health <= 0) {
+        this.loseCounter += 1
+        if (confirm('Sadly you lose! Want a rematch?')) {
+          this.startGame()
+        } else {
+          this.isRunning = false
+        }
+        return true
+      }
+      return false
     }
-  }
+  },
 });
