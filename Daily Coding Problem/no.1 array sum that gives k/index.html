@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Array interpreter</title>
+  <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <p>My Task:</p>
+  <p>Given a list of numbers, return whether any two sums to k.</p>
+  <p>For example, given [10, 15, 3, 7] and k of 17, return true since 10 + 7 is 17.</p>
+  <p>Solution:</p>
+  <p>Array: <input type="text" v-model='userInput' @input='checkSum()'></p>
+  <p>k: <input type="number" v-model='k' @input='checkSum()' step='1'></p>
+  <p>{{userArray}}</p>
+  <template v-if='isPossible === true'>
+    <p>Possible!</p>
+    <p>{{firstNumber}} + {{secondNumber}}</p>
+    <p>for k = {{ k }}</p>
+  </template>
+  <p v-else>Not possible</p>
+</div>
+
+  
+<script src="script.js" type="text/javascript"></script>
+</body>
+</html>
